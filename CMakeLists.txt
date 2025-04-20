@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(machine_learning_algo src/MLP.cpp main.cpp)
+add_executable(machine_learning_algo src/Linear.cpp src/MLP.cpp main.cpp)

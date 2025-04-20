@@ -7,7 +7,7 @@
 #include <random>
 
 
-MLP::MLP(std::vector<int> npl) {
+MLP::MLP(const std::vector<int> &npl) {
 
     this->npl = npl;
     this->weights = {};
@@ -16,12 +16,12 @@ MLP::MLP(std::vector<int> npl) {
     this->deltas = {};
 
     for (int l = 0; l < this->L + 1; l++) {
-        this->weights.push_back({});
+        this->weights.emplace_back();
 
         if (l == 0) continue;
 
         for (int i = 0; i < this->npl[l - 1] + 1; i++) {
-            this->weights[l].push_back({});
+            this->weights[l].emplace_back();
             for (int j = 0; j < this->npl[l] + 1; j++) {
                 if (j == 0)
                     this->weights[l][i].push_back(0.0);
@@ -32,8 +32,8 @@ MLP::MLP(std::vector<int> npl) {
     }
 
     for (int l = 0 ; l < this->L + 1 ; l++) {
-        this->X.push_back({});
-        this->deltas.push_back({});
+        this->X.emplace_back();
+        this->deltas.emplace_back();
         for (int j = 0 ; j < this->npl[l] + 1; j++) {
             this->deltas[l].push_back(0.);
             if (j==0)
@@ -48,7 +48,7 @@ MLP::MLP(std::vector<int> npl) {
 }
 
 
-void MLP::propagate(std::vector<double> inputs, bool is_classification) {
+void MLP::propagate(const std::vector<double> &inputs, const bool is_classification) {
     for ( int i = 1 ; i < this->npl[0] + 1 ; i++) {
         this->X[0][i] = inputs[i -1];
     }
@@ -65,19 +65,19 @@ void MLP::propagate(std::vector<double> inputs, bool is_classification) {
     }
 }
 
-std::vector<double> MLP::predict(std::vector<double> input, bool is_classification) {
+std::vector<double> MLP::predict(const std::vector<double> &input, const bool is_classification) {
       this->propagate(input,is_classification);
       return this->X[this->L];
 }
 
-void MLP::train(std::vector<std::vector<double>> all_dataset_inputs,
-        std::vector<std::vector<double>> all_dataset_outputs,
-        int interations_count,
-        double learning_rate,
-        bool is_classification
+void MLP::train(const std::vector<std::vector<double>> &all_dataset_inputs,
+        const std::vector<std::vector<double>> &all_dataset_outputs,
+        const int interations_count,
+        const double learning_rate,
+        const bool is_classification
     ) {
     for (int it = 0 ; it < interations_count ; it++) {
-        double k = rand() % all_dataset_inputs.size() -1;
+        const double k = rand() % all_dataset_inputs.size() -1;
         std::vector<double> sample_inputs = all_dataset_inputs[k];
         std::vector<double> sample_expected_outputs = all_dataset_outputs[k];
 

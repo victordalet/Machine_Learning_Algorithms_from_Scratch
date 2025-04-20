@@ -11,10 +11,10 @@
 class MLP {
 
 public:
-    explicit MLP(std::vector<int> npl);
-    std::vector<double> predict(std::vector<double> input, bool is_classification);
-    void train(std::vector<std::vector<double>> all_dataset_inputs,
-        std::vector<std::vector<double>> all_dataset_outputs,
+    explicit MLP(const std::vector<int> &npl);
+    std::vector<double> predict(const std::vector<double> &input, bool is_classification);
+    void train(const std::vector<std::vector<double>> &all_dataset_inputs,
+        const std::vector<std::vector<double>> &all_dataset_outputs,
         int interations_count,
         double learning_rate,
         bool is_classification
@@ -27,7 +27,7 @@ public:
 
 
 private:
-    void propagate(std::vector<double> inputs, bool is_classification);
+    void propagate(const std::vector<double> &inputs, bool is_classification);
 };
 
 
